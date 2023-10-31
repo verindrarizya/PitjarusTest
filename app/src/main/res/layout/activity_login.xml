@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.login.LoginActivity">
+
+    <ImageView
+        android:id="@+id/iv_wave_top"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:contentDescription="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/top_wave"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_username"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Username"
+        app:layout_constraintBottom_toTopOf="@id/middle_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:startIconDrawable="@drawable/ic_person"
+        app:startIconTint="@color/pitblue">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_password"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Password"
+        app:endIconMode="password_toggle"
+        app:layout_constraintEnd_toEndOf="@id/til_username"
+        app:layout_constraintStart_toStartOf="@id/til_username"
+        app:layout_constraintTop_toBottomOf="@id/middle_guideline"
+        app:startIconDrawable="@drawable/ic_lock_24"
+        app:startIconTint="@color/pitblue">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/middle_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.45" />
+
+    <CheckBox
+        android:id="@+id/cb_keep_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="@color/pitblue"
+        android:text="Keep Username"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+        android:textColor="@color/pitblue"
+        app:layout_constraintStart_toStartOf="@id/til_username"
+        app:layout_constraintTop_toBottomOf="@id/til_password"
+        tools:checked="true" />
+
+    <TextView
+        android:id="@+id/tv_check_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_download"
+        android:text="Check Update"
+        android:textColor="@color/pitblue"
+        app:layout_constraintBaseline_toBaselineOf="@id/cb_keep_username"
+        app:layout_constraintEnd_toEndOf="@id/til_username" />
+
+    <Space
+        android:id="@+id/space"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cb_keep_username" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/pitblue"
+        app:layout_constraintBottom_toBottomOf="@id/space"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/space" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/pitblue"
+        android:padding="10dp"
+        android:text="Login"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/space"
+        app:layout_constraintEnd_toEndOf="@id/til_username"
+        app:layout_constraintStart_toStartOf="@id/til_username"
+        app:layout_constraintTop_toTopOf="@id/space"
+        tools:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_app_version"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="App Ver 1.0.0 - 20013FEA6BCC820C"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@id/iv_wave_bottom"
+        app:layout_constraintEnd_toEndOf="@id/til_username"
+        app:layout_constraintStart_toStartOf="@id/til_username"
+        app:layout_constraintTop_toBottomOf="@id/space"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/iv_wave_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:contentDescription="@null"
+        android:scaleType="fitXY"
+        android:src="@drawable/bottom_wave"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
