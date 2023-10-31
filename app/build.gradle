@@ -65,7 +65,9 @@ dependencies {
 
     implementation "androidx.datastore:datastore-preferences:$datastore_version"
 
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_android_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_android_version" \
+
+    implementation "de.hdodenhof:circleimageview:$circle_image_view_version"
 
     testImplementation "junit:junit:$junit_version"
 

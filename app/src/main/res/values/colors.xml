@@ -10,4 +10,7 @@
     <color name="water">#CDF5F6</color>
 
     <color name="pitblue">#0047CC</color>
+    <color name="greyish">#EAEAEA</color>
+    <color name="orangish">#FF9800</color>
+    <color name="grayblueish">#E5ECFF</color>
 </resources>

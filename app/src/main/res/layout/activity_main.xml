@@ -4,15 +4,357 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/greyish"
     tools:context=".presentation.main.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:background="@color/pitblue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/main_toolbar_menu"
+        app:title="Main Menu"
+        app:titleTextColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/bg_pitblue"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        android:contentDescription="@null"
+        android:src="@color/pitblue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_profile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="-50dp"
+        android:src="@drawable/ic_profile"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bg_pitblue" />
+
+    <TextView
+        android:id="@+id/tv_username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
+        android:text="Mitha Khairulnisa"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_profile" />
+
+    <TextView
+        android:id="@+id/tv_role"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Role: Pekerja"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/tv_username"
+        app:layout_constraintStart_toStartOf="@id/tv_username"
+        app:layout_constraintTop_toBottomOf="@id/tv_username" />
+
+    <TextView
+        android:id="@+id/tv_nik"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="NIK: MD00001"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@id/tv_username"
+        app:layout_constraintStart_toStartOf="@id/tv_username"
+        app:layout_constraintTop_toBottomOf="@id/tv_role" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_kunjungan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:minHeight="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_nik">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tv_title_kunjungan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Kunjungan pada bulan agustus 2020"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_total_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_warn"
+                android:drawablePadding="2dp"
+                android:text="150"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/tv_actual_score"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_kunjungan" />
+
+            <TextView
+                android:id="@+id/tv_actual_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_check"
+                android:drawablePadding="2dp"
+                android:text="150"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_total_score"
+                app:layout_constraintEnd_toStartOf="@+id/tv_percentage"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_total_score" />
+
+            <TextView
+                android:id="@+id/tv_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_chart"
+                android:drawablePadding="2dp"
+                android:text="50%"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                app:layout_constraintBaseline_toBaselineOf="@id/tv_total_score"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_actual_score" />
+
+            <TextView
+                android:id="@+id/tv_title_total_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Total Store"
+                android:textStyle="bold"
+
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="@id/tv_total_score"
+                app:layout_constraintStart_toStartOf="@id/tv_total_score"
+                app:layout_constraintTop_toBottomOf="@id/tv_total_score" />
+
+            <TextView
+                android:id="@+id/tv_title_actual_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Actual Store"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                app:layout_constrainedWidth="true"
+                app:layout_constraintEnd_toEndOf="@id/tv_actual_score"
+                app:layout_constraintStart_toStartOf="@id/tv_actual_score"
+                app:layout_constraintTop_toBottomOf="@id/tv_actual_score" />
+
+            <TextView
+                android:id="@+id/tv_title_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Percentage"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/tv_percentage"
+                app:layout_constraintStart_toStartOf="@id/tv_percentage"
+                app:layout_constraintTop_toBottomOf="@id/tv_percentage" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/cv_kunjungan">
+
+        <TextView
+            android:id="@+id/tv_title_menu_section"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Menu"
+            android:textColor="@color/orangish"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_kunjungan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/grayblueish"
+            android:src="@drawable/ic_store"
+            app:borderWidth="0dp"
+            app:elevation="0dp"
+            app:layout_constraintEnd_toStartOf="@+id/fab_target"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_menu_section"
+            app:tint="@null" />
+
+        <TextView
+            android:id="@+id/tv_kunjungan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Kunjungan"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="@id/fab_kunjungan"
+            app:layout_constraintStart_toStartOf="@id/fab_kunjungan"
+            app:layout_constraintTop_toBottomOf="@id/fab_kunjungan" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_target"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/grayblueish"
+            android:src="@drawable/ic_target"
+            app:borderWidth="0dp"
+            app:elevation="0dp"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@+id/fab_dashboard"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/fab_kunjungan"
+            app:layout_constraintTop_toTopOf="@id/fab_kunjungan"
+            app:tint="@null"
+            tools:layout_editor_absoluteY="40dp" />
+
+        <TextView
+            android:id="@+id/tv_target"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Target Install CDFDPC"
+            android:textAlignment="center"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="@id/fab_target"
+            app:layout_constraintStart_toStartOf="@id/fab_target"
+            app:layout_constraintTop_toBottomOf="@id/fab_target" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_dashboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/grayblueish"
+            android:src="@drawable/ic_dashboard"
+            app:borderWidth="0dp"
+            app:elevation="0dp"
+            app:layout_constraintEnd_toStartOf="@+id/fab_transmission"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/fab_target"
+            app:layout_constraintTop_toTopOf="@id/fab_kunjungan"
+            app:tint="@null"
+            tools:layout_editor_absoluteY="40dp" />
+
+        <TextView
+            android:id="@+id/tv_dashboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Dashboard"
+            android:textAlignment="center"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="@id/fab_dashboard"
+            app:layout_constraintStart_toStartOf="@id/fab_dashboard"
+            app:layout_constraintTop_toBottomOf="@id/fab_dashboard" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_transmission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/grayblueish"
+            android:src="@drawable/ic_transaction"
+            app:borderWidth="0dp"
+            app:elevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/fab_dashboard"
+            app:layout_constraintTop_toTopOf="@id/fab_kunjungan"
+            app:tint="@null"
+            tools:layout_editor_absoluteY="40dp" />
+
+        <TextView
+            android:id="@+id/tv_transmission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Transmission History"
+            android:textAlignment="center"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="@id/fab_transmission"
+            app:layout_constraintStart_toStartOf="@id/fab_transmission"
+            app:layout_constraintTop_toBottomOf="@id/fab_transmission" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/grayblueish"
+            android:src="@drawable/ic_logout"
+            app:borderWidth="0dp"
+            app:elevation="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_target"
+            app:tint="@null"
+            tools:layout_editor_absoluteY="40dp" />
+
+        <TextView
+            android:id="@+id/tv_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Logout"
+            android:textAlignment="center"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toEndOf="@id/fab_logout"
+            app:layout_constraintStart_toStartOf="@id/fab_logout"
+            app:layout_constraintTop_toBottomOf="@id/fab_logout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
