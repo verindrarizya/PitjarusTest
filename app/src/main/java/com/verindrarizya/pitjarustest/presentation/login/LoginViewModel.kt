@@ -1,6 +1,5 @@
 package com.verindrarizya.pitjarustest.presentation.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,7 +20,6 @@ class LoginViewModel @Inject constructor(
         get() = _loginResource
 
     fun login(username: String, password: String) {
-        Log.d("PitTag", "login: viewmodel called")
         viewModelScope.launch {
             authRepository.login(username, password).collect {
                 _loginResource.value = it

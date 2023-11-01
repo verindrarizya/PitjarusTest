@@ -1,6 +1,5 @@
 package com.verindrarizya.pitjarustest.data.repository.auth
 
-import android.util.Log
 import com.verindrarizya.pitjarustest.data.source.local.dao.StoreDao
 import com.verindrarizya.pitjarustest.data.source.remote.api.ApiService
 import com.verindrarizya.pitjarustest.util.DataMapper
@@ -14,7 +13,6 @@ class AuthRepositoryImpl @Inject constructor(
     private val storeDao: StoreDao
 ) : AuthRepository {
     override suspend fun login(username: String, password: String): Flow<Resource<String>> = flow {
-        Log.d("PitTag", "login: repo ccalled")
         emit(Resource.Loading)
 
         try {
