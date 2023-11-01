@@ -12,6 +12,8 @@ import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
 import com.verindrarizya.pitjarustest.databinding.ActivityStoreListBinding
 import com.verindrarizya.pitjarustest.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -98,11 +100,14 @@ class StoreListActivity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun getCurrentLocation() {
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+        fusedLocationClient.getCurrentLocation(
+            Priority.PRIORITY_HIGH_ACCURACY,
+            CancellationTokenSource().token
+        ).addOnSuccessListener { location ->
             if (location == null) {
                 showShortToast("Please turn on location")
             } else {
-                // Set Marker
+                Log.d("LocationTag", "getCurrentLocation: ${location.longitude} ${location.latitude}")
             }
         }
     }
