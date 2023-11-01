@@ -71,6 +71,8 @@ dependencies {
 
     implementation "com.google.android.gms:play-services-location:$play_services_location_version"
 
+    implementation "com.google.android.gms:play-services-maps:$maps_version"
+
     testImplementation "junit:junit:$junit_version"
 
     androidTestImplementation "androidx.test.ext:junit:$android_junit_version"

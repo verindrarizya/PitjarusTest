@@ -1,25 +1,36 @@
 package com.verindrarizya.pitjarustest.presentation.storelist
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.CancellationTokenSource
+import com.verindrarizya.pitjarustest.R
 import com.verindrarizya.pitjarustest.databinding.ActivityStoreListBinding
 import com.verindrarizya.pitjarustest.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class StoreListActivity : AppCompatActivity() {
+class StoreListActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private val binding: ActivityStoreListBinding by lazy {
         ActivityStoreListBinding.inflate(layoutInflater)
@@ -36,6 +47,8 @@ class StoreListActivity : AppCompatActivity() {
         LocationServices.getFusedLocationProviderClient(this)
     }
 
+    private lateinit var map: GoogleMap
+
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -43,7 +56,7 @@ class StoreListActivity : AppCompatActivity() {
             permissions[coarseLocationPermission] == true
         ) {
             showShortToast("Permission Granted")
-            getCurrentLocation()
+            setUpMap()
         } else {
             showShortToast("Accept to use this feature")
             finish()
@@ -73,8 +86,12 @@ class StoreListActivity : AppCompatActivity() {
     }
 
     private fun setUpObserver() {
-        viewModel.stores.observe(this) {
-            storeItemAdapter.submitList(it)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.stores.collect {
+                    storeItemAdapter.submitList(it)
+                }
+            }
         }
     }
 
@@ -94,20 +111,63 @@ class StoreListActivity : AppCompatActivity() {
                 )
             )
         } else {
-            getCurrentLocation()
+            setUpMap()
         }
     }
 
-    @SuppressLint("MissingPermission")
-    private fun getCurrentLocation() {
-        fusedLocationClient.getCurrentLocation(
-            Priority.PRIORITY_HIGH_ACCURACY,
-            CancellationTokenSource().token
-        ).addOnSuccessListener { location ->
-            if (location == null) {
-                showShortToast("Please turn on location")
-            } else {
-                Log.d("LocationTag", "getCurrentLocation: ${location.longitude} ${location.latitude}")
+    private fun setUpMap() {
+        val mapFragment =
+            supportFragmentManager.findFragmentById(binding.maps.id) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            locationPermissionRequest.launch(
+                arrayOf(
+                    coarseLocationPermission,
+                    fineLocationPermission
+                )
+            )
+        } else {
+            fusedLocationClient.getCurrentLocation(
+                Priority.PRIORITY_HIGH_ACCURACY,
+                CancellationTokenSource().token
+            ).addOnSuccessListener { location ->
+                if (location == null) {
+                    showShortToast("Please turn on location")
+                } else {
+                    val locationLatLng = LatLng(location.latitude, location.longitude)
+                    map.addMarker(
+                        MarkerOptions()
+                            .position(locationLatLng)
+                            .title("You're Here")
+                    )
+
+                    map.moveCamera(CameraUpdateFactory.newLatLng(locationLatLng))
+
+                    lifecycleScope.launch {
+                        val stores = viewModel.stores.first()
+                        stores.forEach { store ->
+                            val storeLatLng =
+                                LatLng(store.latitude.toDouble(), store.longitude.toDouble())
+                            map.addMarker(
+                                MarkerOptions()
+                                    .position(storeLatLng)
+                                    .title(store.storeName)
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_map))
+                            )
+                        }
+                    }
+                }
             }
         }
     }
