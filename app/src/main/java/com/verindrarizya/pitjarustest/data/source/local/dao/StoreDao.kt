@@ -11,7 +11,7 @@ import com.verindrarizya.pitjarustest.data.source.local.entity.StoreEntity
 interface StoreDao {
 
     @Query("SELECT * FROM store")
-    fun getAllStore(): LiveData<StoreEntity>
+    fun getAllStore(): LiveData<List<StoreEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllStore(storeEntities: List<StoreEntity>)

@@ -65,4 +65,6 @@ data class StoreEntity(
 
     @ColumnInfo("is_visited")
     val isVisited: Boolean = false
-)
+) {
+
+}

@@ -1,7 +1,6 @@
 package com.verindrarizya.pitjarustest.data.source.remote.response
 
 import com.google.gson.annotations.SerializedName
-import com.verindrarizya.pitjarustest.data.source.local.entity.StoreEntity
 
 data class StoreResponse(
 
@@ -58,25 +57,4 @@ data class StoreResponse(
 
     @field:SerializedName("longitude")
     val longitude: String
-) {
-    fun toStoreEntity(): StoreEntity = StoreEntity(
-        storeId = storeId,
-        storeCode = storeCode,
-        channelName = channelName,
-        areaName = areaName,
-        address = address,
-        dcName = dcName,
-        latitude = latitude,
-        regionId = regionId,
-        areaId = areaId,
-        accountId = accountId,
-        dcId = dcId,
-        subchannelId = subchannelId,
-        accountName = accountName,
-        storeName = storeName,
-        subchannelName = subchannelName,
-        regionName = regionName,
-        channelId = channelId,
-        longitude = longitude
-    )
-}
+)

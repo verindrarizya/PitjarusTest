@@ -3,6 +3,7 @@ package com.verindrarizya.pitjarustest.data.repository.auth
 import android.util.Log
 import com.verindrarizya.pitjarustest.data.source.local.dao.StoreDao
 import com.verindrarizya.pitjarustest.data.source.remote.api.ApiService
+import com.verindrarizya.pitjarustest.util.DataMapper
 import com.verindrarizya.pitjarustest.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,7 +21,7 @@ class AuthRepositoryImpl @Inject constructor(
             val loginResponse = apiService.login(username, password)
             val storeResponse = loginResponse.stores
 
-            val storeEntities = storeResponse.map { it.toStoreEntity() }
+            val storeEntities = storeResponse.map { DataMapper.storeResponseToEntity(it) }
             storeDao.insertAllStore(storeEntities)
 
             emit(Resource.Success("Login Success!"))
