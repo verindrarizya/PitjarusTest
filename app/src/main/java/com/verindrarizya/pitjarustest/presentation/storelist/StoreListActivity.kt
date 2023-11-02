@@ -1,6 +1,7 @@
 package com.verindrarizya.pitjarustest.presentation.storelist
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
@@ -12,7 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -24,10 +24,13 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.verindrarizya.pitjarustest.R
 import com.verindrarizya.pitjarustest.databinding.ActivityStoreListBinding
+import com.verindrarizya.pitjarustest.presentation.storedetail.StoreDetailActivity
+import com.verindrarizya.pitjarustest.util.STORE
 import com.verindrarizya.pitjarustest.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class StoreListActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -43,9 +46,8 @@ class StoreListActivity : AppCompatActivity(), OnMapReadyCallback {
     private val fineLocationPermission = Manifest.permission.ACCESS_FINE_LOCATION
     private val coarseLocationPermission = Manifest.permission.ACCESS_COARSE_LOCATION
 
-    private val fusedLocationClient: FusedLocationProviderClient by lazy {
-        LocationServices.getFusedLocationProviderClient(this)
-    }
+    @Inject
+    lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private lateinit var map: GoogleMap
 
@@ -80,7 +82,11 @@ class StoreListActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun setUpStoreRecyclerView() {
-        storeItemAdapter = StoreItemAdapter { }
+        storeItemAdapter = StoreItemAdapter {
+            val intent = Intent(this, StoreDetailActivity::class.java)
+            intent.putExtra(STORE, it)
+            startActivity(intent)
+        }
         binding.rvStore.layoutManager = LinearLayoutManager(this)
         binding.rvStore.adapter = storeItemAdapter
     }

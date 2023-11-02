@@ -12,11 +12,11 @@
         android:layout_width="0dp"
         android:layout_height="300dp"
         android:scaleType="centerCrop"
+        android:src="@drawable/image_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/indomaret_placeholder" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -64,11 +64,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
+                android:text="Loading..."
                 android:textColor="@color/orangish"
                 app:layout_constraintBottom_toBottomOf="@id/iv_location"
                 app:layout_constraintStart_toEndOf="@id/iv_location"
-                app:layout_constraintTop_toTopOf="@id/iv_location"
-                tools:text="Lokasi Belum Tersedia" />
+                app:layout_constraintTop_toTopOf="@id/iv_location" />
 
             <Button
                 android:id="@+id/btn_reset"

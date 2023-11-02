@@ -18,6 +18,8 @@ class StoreItemAdapter(
         fun bind(store: Store) {
             binding.tvStoreName.text = store.storeName
             binding.tvVisited.isVisible = store.isVisited
+
+            itemView.setOnClickListener { onStoreItemClick(store) }
         }
     }
 

@@ -47,7 +47,8 @@ object DataMapper {
         regionName = storeEntity.regionName,
         channelId = storeEntity.channelId,
         longitude = storeEntity.longitude,
-        isVisited = storeEntity.isVisited
+        isVisited = storeEntity.isVisited,
+        id = storeEntity.id
     )
 
     fun storeUiModelToEntity(store: Store): StoreEntity = StoreEntity(
