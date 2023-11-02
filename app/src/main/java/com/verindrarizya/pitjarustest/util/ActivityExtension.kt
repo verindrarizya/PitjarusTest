@@ -7,4 +7,4 @@ fun Activity.showShortToast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
 
-const val STORE = "STORE"
+const val STORE_ID = "STORE_ID"

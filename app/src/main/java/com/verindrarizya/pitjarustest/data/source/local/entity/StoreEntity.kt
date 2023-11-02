@@ -64,7 +64,10 @@ data class StoreEntity(
     val longitude: String,
 
     @ColumnInfo("is_visited")
-    val isVisited: Boolean = false
+    val isVisited: Boolean = false,
+
+    @ColumnInfo("image_uri")
+    val imageUri: String? = null
 ) {
 
 }

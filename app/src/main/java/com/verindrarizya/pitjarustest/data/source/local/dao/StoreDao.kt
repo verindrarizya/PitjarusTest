@@ -14,6 +14,9 @@ interface StoreDao {
     @Query("SELECT * FROM store")
     fun getAllStore(): Flow<List<StoreEntity>>
 
+    @Query("SELECT * FROM STORE WHERE id = :id")
+    fun getStore(id: Int): Flow<StoreEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllStore(storeEntities: List<StoreEntity>)
 

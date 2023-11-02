@@ -25,7 +25,7 @@ import com.google.android.gms.tasks.CancellationTokenSource
 import com.verindrarizya.pitjarustest.R
 import com.verindrarizya.pitjarustest.databinding.ActivityStoreListBinding
 import com.verindrarizya.pitjarustest.presentation.storedetail.StoreDetailActivity
-import com.verindrarizya.pitjarustest.util.STORE
+import com.verindrarizya.pitjarustest.util.STORE_ID
 import com.verindrarizya.pitjarustest.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.first
@@ -84,7 +84,7 @@ class StoreListActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun setUpStoreRecyclerView() {
         storeItemAdapter = StoreItemAdapter {
             val intent = Intent(this, StoreDetailActivity::class.java)
-            intent.putExtra(STORE, it)
+            intent.putExtra(STORE_ID, it.id)
             startActivity(intent)
         }
         binding.rvStore.layoutManager = LinearLayoutManager(this)

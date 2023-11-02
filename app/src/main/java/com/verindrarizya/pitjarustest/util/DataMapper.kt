@@ -1,5 +1,6 @@
 package com.verindrarizya.pitjarustest.util
 
+import android.net.Uri
 import com.verindrarizya.pitjarustest.data.source.local.entity.StoreEntity
 import com.verindrarizya.pitjarustest.data.source.remote.response.StoreResponse
 import com.verindrarizya.pitjarustest.presentation.model.Store
@@ -48,7 +49,8 @@ object DataMapper {
         channelId = storeEntity.channelId,
         longitude = storeEntity.longitude,
         isVisited = storeEntity.isVisited,
-        id = storeEntity.id
+        id = storeEntity.id,
+        imageUri = if (storeEntity.imageUri == null) null else Uri.parse(storeEntity.imageUri)
     )
 
     fun storeUiModelToEntity(store: Store): StoreEntity = StoreEntity(
@@ -70,6 +72,8 @@ object DataMapper {
         regionName = store.regionName,
         channelId = store.channelId,
         longitude = store.longitude,
-        isVisited = store.isVisited
+        isVisited = store.isVisited,
+        id = store.id,
+        imageUri = store.imageUri.toString()
     )
 }

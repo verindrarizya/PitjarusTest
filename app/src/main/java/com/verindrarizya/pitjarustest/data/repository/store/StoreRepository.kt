@@ -8,6 +8,8 @@ interface StoreRepository {
 
     fun getAllStore(): Flow<List<Store>>
 
+    fun getStore(id: Int): Flow<Store>
+
     suspend fun updateStore(store: Store): Resource<String>
 
 }

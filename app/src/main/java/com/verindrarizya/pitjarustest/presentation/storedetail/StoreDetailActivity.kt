@@ -1,15 +1,25 @@
 package com.verindrarizya.pitjarustest.presentation.storedetail
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
+import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.verindrarizya.pitjarustest.databinding.ActivityStoreDetailBinding
+import com.verindrarizya.pitjarustest.presentation.storevisit.StoreVisitActivity
+import com.verindrarizya.pitjarustest.util.Resource
+import com.verindrarizya.pitjarustest.util.STORE_ID
+import com.verindrarizya.pitjarustest.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -21,6 +31,15 @@ class StoreDetailActivity : AppCompatActivity() {
 
     private val viewModel: StoreDetailViewModel by viewModels()
 
+    private val takePicture =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+            if (isSuccess) {
+                viewModel.setImageUri(imageUri)
+            }
+        }
+
+    private lateinit var imageUri: Uri
+
     @Inject
     lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -28,7 +47,12 @@ class StoreDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        setUpToolbar()
         setUpObserver()
+        setUpButtonCamera()
+
+        binding.btnNoVisit.setOnClickListener { onBackPressed() }
+        binding.btnVisit.setOnClickListener { viewModel.visit() }
     }
 
     private fun setUpObserver() {
@@ -41,6 +65,13 @@ class StoreDetailActivity : AppCompatActivity() {
                 binding.tvLocationStatus.text = "Loading..."
                 checkDistance(store.latitude.toDouble(), store.longitude.toDouble())
             }
+
+            store.imageUri?.let {
+                Glide.with(this)
+                    .load(it)
+                    .centerCrop()
+                    .into(binding.ivStore)
+            }
         }
 
         viewModel.isWithinHundredMeterRadius.observe(this) { isWithin ->
@@ -50,6 +81,41 @@ class StoreDetailActivity : AppCompatActivity() {
                 "Lokasi Belum Sesuai"
             }
         }
+
+        viewModel.imageUri.observe(this) { uri ->
+            uri?.let {
+                Glide.with(this)
+                    .load(it)
+                    .centerCrop()
+                    .into(binding.ivStore)
+            }
+        }
+
+        viewModel.isVisitEnabled.observe(this) {
+            binding.btnVisit.isEnabled = it
+        }
+
+        viewModel.visitResult.observe(this) {
+            when {
+                it is Resource.Success -> {
+                    val store = viewModel.store.value
+                    store?.let { value ->
+                        val intent = Intent(this, StoreVisitActivity::class.java)
+                        intent.putExtra(STORE_ID, value.id)
+
+                        startActivity(intent).also { finish() }
+                    }
+                }
+
+                it is Resource.Failure -> {
+                    showShortToast(it.message)
+                }
+            }
+        }
+    }
+
+    private fun setUpToolbar() {
+        binding.toolbar.setNavigationOnClickListener { onBackPressed() }
     }
 
     // Saya suppress tanpa check permission karena untuk masuk ke activity ini
@@ -81,4 +147,27 @@ class StoreDetailActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun setUpButtonCamera() {
+        binding.fabCamera.setOnClickListener {
+            val imageFile = createImageFile()
+            imageUri = FileProvider.getUriForFile(
+                this,
+                "${applicationContext.packageName}.provider",
+                imageFile
+            )
+
+            takePicture.launch(imageUri)
+        }
+    }
+
+    private fun createImageFile(): File {
+        val dir = File(filesDir, "store_images")
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
+
+        return File(dir, "${System.currentTimeMillis()}.jpg")
+    }
+
 }

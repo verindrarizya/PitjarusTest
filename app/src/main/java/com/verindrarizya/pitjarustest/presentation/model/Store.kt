@@ -1,9 +1,7 @@
 package com.verindrarizya.pitjarustest.presentation.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import android.net.Uri
 
-@Parcelize
 data class Store(
     val id: Int,
     val storeId: String,
@@ -24,5 +22,6 @@ data class Store(
     val regionName: String,
     val channelId: String,
     val longitude: String,
-    val isVisited: Boolean = false
-) : Parcelable
+    val isVisited: Boolean,
+    val imageUri: Uri?
+)
