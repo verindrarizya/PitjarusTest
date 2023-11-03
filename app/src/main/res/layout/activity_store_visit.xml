@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/transaction_toolbar_menu"
-        app:subtitle="userA"
+        tools:subtitle="userA"
         app:title="List Store" />
 
     <androidx.core.widget.NestedScrollView

@@ -99,6 +99,16 @@ class StoreListActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.username.collect {
+                    if (it != null) {
+                        binding.toolbar.subtitle = it
+                    }
+                }
+            }
+        }
     }
 
     private fun checkPermission() {

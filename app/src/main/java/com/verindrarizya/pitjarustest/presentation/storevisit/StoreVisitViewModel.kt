@@ -5,19 +5,22 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.verindrarizya.pitjarustest.data.repository.auth.AuthRepository
 import com.verindrarizya.pitjarustest.data.repository.store.StoreRepository
 import com.verindrarizya.pitjarustest.presentation.model.DashboardStoreItem
 import com.verindrarizya.pitjarustest.presentation.model.Store
 import com.verindrarizya.pitjarustest.presentation.model.dashboardStoreItemsPlaceholder
 import com.verindrarizya.pitjarustest.util.STORE_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class StoreVisitViewModel @Inject constructor(
     private val storeRepository: StoreRepository,
-    private val savedStateHandle: SavedStateHandle
+    private val savedStateHandle: SavedStateHandle,
+    private val authRepository: AuthRepository
 ) : ViewModel() {
 
     private val _store: MutableLiveData<Store> = MutableLiveData()
@@ -27,6 +30,8 @@ class StoreVisitViewModel @Inject constructor(
     private val _dashboardStoreItems: MutableLiveData<List<DashboardStoreItem>> = MutableLiveData()
     val dashboardStoreItems: LiveData<List<DashboardStoreItem>>
         get() = _dashboardStoreItems
+
+    val username: Flow<String?> = authRepository.username
 
     init {
         setUp()

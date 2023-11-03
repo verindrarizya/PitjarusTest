@@ -9,6 +9,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
@@ -19,6 +22,7 @@ import com.verindrarizya.pitjarustest.util.Resource
 import com.verindrarizya.pitjarustest.util.STORE_ID
 import com.verindrarizya.pitjarustest.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
 
@@ -102,6 +106,16 @@ class StoreDetailActivity : AppCompatActivity() {
 
                 it is Resource.Failure -> {
                     showShortToast(it.message)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.username.collect {
+                    if (it != null) {
+                        binding.toolbar.subtitle = it
+                    }
                 }
             }
         }

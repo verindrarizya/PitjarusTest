@@ -4,11 +4,15 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.verindrarizya.pitjarustest.R
 import com.verindrarizya.pitjarustest.databinding.ActivityStoreVisitBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class StoreVisitActivity : AppCompatActivity() {
@@ -53,6 +57,16 @@ class StoreVisitActivity : AppCompatActivity() {
 
         viewModel.dashboardStoreItems.observe(this) {
             dashboardStoreItemAdapter.submitList(it)
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.username.collect {
+                    if (it != null) {
+                        binding.toolbar.subtitle = it
+                    }
+                }
+            }
         }
     }
 

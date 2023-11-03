@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:menu="@menu/transaction_toolbar_menu"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:subtitle="userA"
+        tools:subtitle="userA"
         app:title="List Store" />
 
     <androidx.appcompat.widget.SearchView
