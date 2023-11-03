@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.verindrarizya.pitjarustest.databinding.ActivityLoginBinding
-import com.verindrarizya.pitjarustest.presentation.main.MainActivity
+import com.verindrarizya.pitjarustest.presentation.main.StoreMainActivity
 import com.verindrarizya.pitjarustest.util.Resource
 import com.verindrarizya.pitjarustest.util.showShortToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
             if (value is Resource.Success) {
                 showShortToast(value.data)
 
-                val intent = Intent(this, MainActivity::class.java).apply {
+                val intent = Intent(this, StoreMainActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 }
                 startActivity(intent)
