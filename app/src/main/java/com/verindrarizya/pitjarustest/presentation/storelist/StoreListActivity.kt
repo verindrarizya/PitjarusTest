@@ -158,7 +158,7 @@ class StoreListActivity : AppCompatActivity(), OnMapReadyCallback {
                             .title("You're Here")
                     )
 
-                    map.moveCamera(CameraUpdateFactory.newLatLng(locationLatLng))
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(locationLatLng, 10f))
 
                     lifecycleScope.launch {
                         val stores = viewModel.stores.first()
