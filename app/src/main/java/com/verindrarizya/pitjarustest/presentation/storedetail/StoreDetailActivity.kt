@@ -65,13 +65,6 @@ class StoreDetailActivity : AppCompatActivity() {
                 binding.tvLocationStatus.text = "Loading..."
                 checkDistance(store.latitude.toDouble(), store.longitude.toDouble())
             }
-
-            store.imageUri?.let {
-                Glide.with(this)
-                    .load(it)
-                    .centerCrop()
-                    .into(binding.ivStore)
-            }
         }
 
         viewModel.isWithinHundredMeterRadius.observe(this) { isWithin ->

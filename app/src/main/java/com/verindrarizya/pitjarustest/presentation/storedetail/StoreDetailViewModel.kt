@@ -57,7 +57,6 @@ class StoreDetailViewModel @Inject constructor(
             if (storeId != null) {
                 storeRepository.getStore(storeId).collect {
                     _store.value = it
-                    _imageUri.value = it.imageUri
                 }
             }
         }

@@ -334,8 +334,10 @@
                     tools:drawableStart="@drawable/ic_cancel" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_dashboard_store_item"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:clipToPadding="false"
                     android:paddingHorizontal="16dp"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
